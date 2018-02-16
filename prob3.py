@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
 import random
+import prob2
 
 def generate_dummy_data(with_err=False):
 	'''Return dummy data as a dictionary with 32 keys (1..32)
@@ -26,5 +27,23 @@ def generate_dummy_data(with_err=False):
 		dummy_data[str(num)] = readings
 
 	return dummy_data
+
+def check_error(dataset):
+
+	errors = []
+
+	for region in sorted(dataset.keys(), key=int):
+
+		for sensor in range(0,16):
+			if ( dataset[region][sensor] == "err" ):
+				errors.append("{0}({1})".format(region,sensor))
+
+	if ( len(errors) > 0 ):
+
+		timestamp = prob2.get_timestamp()
+
+		with open(timestamp + "_err", "w") as out_f:
+			for sensor in errors:
+				print(sensor, file=out_f)
 
 
