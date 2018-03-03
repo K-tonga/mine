@@ -4,11 +4,10 @@ import glob
 import datetime
 import prob1
 
-def store_dataset(dataset):
-	'''Write the dataset to a text file, taking care not to overwrite
-	   any existing datasets
+def get_timestamp():
+	'''Return a timestamp adding a suffix incase
+	   a file already exists with that timestamp.
 	'''
-
 	timestamp = str(datetime.datetime.now())
 	timestamp = timestamp.replace("-", ".")
 	timestamp = timestamp.replace(":", ".")
@@ -21,6 +20,15 @@ def store_dataset(dataset):
 		suffix = "_" + str(len(existing) + 1)
 	
 	timestamp += suffix;
+
+	return timestamp
+
+def store_dataset(dataset):
+	'''Write the dataset to a text file, taking care not to overwrite
+	   any existing datasets
+	'''
+
+	timestamp = get_timestamp()
 
 	with open(timestamp, "w") as out_f:
 
